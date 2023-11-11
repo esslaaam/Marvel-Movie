@@ -10,6 +10,10 @@ double height(BuildContext context) {
 }
 
 const String kAlmarai = "Almarai";
+const String kApiKey = "d58e28b9d1481eefde876995ddddc816";
+const String kHashKey = "bdf3ea30f988f407f46064f33e9db5a5";
+const String kMoviesBox = "movies_box";
+const String kMovieDetailsBox = "movie_details_box";
 
 class AppFonts {
   static final double t26 = 26.sp;

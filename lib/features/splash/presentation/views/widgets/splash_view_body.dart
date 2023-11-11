@@ -24,7 +24,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       1,
       2,
       Center(child: Image.asset(
-        AppImages.logo,
+        AppImages.logo2,
         width: width(context) * 0.5,
       )),
     );

@@ -1,18 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/core/local/app_config.dart';
 
 class ApiServices {
- final Dio _dio ;
 
- final String baseUrl = "https://www.googleapis.com/books/v1/";
-
-  ApiServices(this._dio);
-
-
-  Future<Map<String,dynamic>> get({required String endPoint})async{
-
-   var response = await _dio.get('$baseUrl$endPoint');
-
-   return response.data ;
-
+  Future<Map<String, dynamic>> get({required String endPoint}) async {
+    var response = await Dio().get('${AppConfig.baseUrl}$endPoint');
+    return response.data;
   }
 }

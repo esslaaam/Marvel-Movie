@@ -5,6 +5,8 @@ import 'core/utils/bloc_observer.dart';
 import 'core/utils/constants.dart';
 import 'features/splash/presentation/views/splash_view.dart';
 
+/// flutter packages pub run build_runner build ===> TO GENERATE TYPE ADAPTER
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
@@ -19,6 +21,7 @@ class MovieApp extends StatelessWidget {
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
+      ensureScreenSize: true,
       builder: (context, child) => MaterialApp(
         title: 'Marvel Movie',
         debugShowCheckedModeBanner: false,
