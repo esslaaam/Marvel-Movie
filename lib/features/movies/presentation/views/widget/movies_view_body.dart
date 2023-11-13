@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/utils/functions/setup_locator.dart';
-import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/data/repos/movies_repos_impl.dart';
 import 'package:movie_app/features/movies/domain/use_cases/fetch_movies_use_case.dart';
 import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_movies.dart';
@@ -29,16 +28,11 @@ class MoviesViewBody extends StatelessWidget {
             child: Column(
               children: [
                 CustomSearchFormField(
-                    controller: cubit.searchCtrl,
-                    onSearchChanged: (val) {
-                      if (val.isNotEmpty) {
-                        cubit.playSearch();
-                        cubit.fetchResultSearchMovies(
-                            searchModel: SearchModel(0, val));
-                      } else {
-                        cubit.stopSearch();
-                      }
-                    }),
+                  controller: cubit.searchCtrl,
+                  onSearchChanged: (val) {
+                    cubit.search(val: val);
+                  },
+                ),
                 cubit.isSearch == true
                     ? const CustomMovieResultSearchList()
                     : const CustomMovieList()

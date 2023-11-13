@@ -10,8 +10,6 @@ class MovieDetailsLocalDataSourceImpl extends MovieDetailsLocalDataSource {
   @override
   MovieDetailsEntity? fetchMovieDetails({required int id}) {
     var box = Hive.box<MovieDetailsEntity>(kMovieDetailsBox);
-    print(id);
-    print(box.values.toList());
     List<MovieDetailsEntity> list = box.values.toList() ;
     MovieDetailsEntity element ;
     for (element in list) {

@@ -5,43 +5,29 @@ abstract class MoviesState {}
 /// List Movies
 class MoviesInitial extends MoviesState {}
 class ChangeUi extends MoviesState {}
-class MoviesLoadingState extends MoviesState {}
-class MoviesPaginationLoadingState extends MoviesState {}
-class MoviesPaginationFailureState extends MoviesState {
-  final String errMessage ;
-
-  MoviesPaginationFailureState(this.errMessage);
+class MoviesLoading extends MoviesState {}
+class MoviesPaginationLoading extends MoviesState {}
+class MoviesPaginationFailure extends MoviesState {
+  final String errMsg ;
+  MoviesPaginationFailure(this.errMsg);
 }
-class MoviesFailureState extends MoviesState {
+class MoviesFailure extends MoviesState {
   final String errMsg;
-
-  MoviesFailureState(this.errMsg);
+  MoviesFailure(this.errMsg);
 }
-class MoviesSuccessState extends MoviesState {
-  final List<MovieEntity> movies;
-
-  MoviesSuccessState(this.movies);
-}
+class MoviesSuccess extends MoviesState {}
 /// Search Movies
-class MoviesSearchLoadingState extends MoviesState {}
-class MoviesSearchPaginationLoadingState extends MoviesState {}
-class MoviesSearchPaginationFailureState extends MoviesState {
-  final String errMessage ;
-
-  MoviesSearchPaginationFailureState(this.errMessage);
+class MoviesSearchLoading extends MoviesState {}
+class MoviesSearchDelayLoading extends MoviesState {}
+class MoviesSearchPaginationLoading extends MoviesState {}
+class MoviesSearchPaginationFailure extends MoviesState {
+  final String errMsg ;
+  MoviesSearchPaginationFailure(this.errMsg);
 }
-class MoviesSearchFailureState extends MoviesState {
+class MoviesSearchFailure extends MoviesState {
   final String errMsg;
-
-  MoviesSearchFailureState(this.errMsg);
+  MoviesSearchFailure(this.errMsg);
 }
-class MoviesSearchSuccessState extends MoviesState {
-  final List<MovieEntity> resultMovies;
+class MoviesSearchSuccess extends MoviesState {}
 
-  MoviesSearchSuccessState(this.resultMovies);
-}
-class MoviesSearchPaginationSuccessState extends MoviesState {
-  final List<MovieEntity> resultMovies;
-
-  MoviesSearchPaginationSuccessState(this.resultMovies);
-}
+class MoviesSearchPaginationSuccess extends MoviesState {}

@@ -14,68 +14,65 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   MoviesCubit(this.fetchMoviesUseCase, this.fetchResultSearchMoviesUseCase) : super(MoviesInitial());
 
-  late final ScrollController scrollControllerMovies;
-  late final ScrollController scrollControllerSearchMovies;
-
   /// Fetch Movies Pagination
 
   List<MovieEntity> homeMovies = [];
 
   bool movie = false;
 
-  int nextPage = 1;
-
-  bool isLoading = false;
-
   Future<void> fetchMovies({int pageNumber = 0}) async {
     if (pageNumber == 0) {
-      emit(MoviesLoadingState());
+      emit(MoviesLoading());
     } else {
-      emit(MoviesPaginationLoadingState());
+      emit(MoviesPaginationLoading());
     }
     var result = await fetchMoviesUseCase.call(pageNumber);
     result.fold((error) {
       if (pageNumber == 0) {
-        emit(MoviesFailureState(error.message));
+        emit(MoviesFailure(error.message));
       } else {
-        emit(MoviesPaginationFailureState(error.message));
+        emit(MoviesPaginationFailure(error.message));
       }
     }, (movies) {
       if (movies.isEmpty) {
         movie = true;
-        showToast(text: "There are no other movies", state: ToastStates.warning);
-        emit(MoviesSuccessState(movies));
+        showToast(
+            text: "There are no other movies", state: ToastStates.warning);
+        emit(MoviesSuccess());
+      } else {
+        homeMovies.addAll(movies);
+        emit(MoviesSuccess());
       }
-      homeMovies.addAll(movies);
-      emit(MoviesSuccessState(movies));
     });
   }
+
+  late final ScrollController scrollControllerMovies;
 
   void pageInitMovies() {
     scrollControllerMovies = ScrollController();
     scrollControllerMovies.addListener(scrollListenerMovies);
   }
 
+  int nextPage = 1;
+  bool isLoading = false;
+
   void scrollListenerMovies() async {
     final currentPosition = scrollControllerMovies.position.pixels;
     final scrollMax = scrollControllerMovies.position.maxScrollExtent;
-    final threshold = scrollMax;
+    final max = scrollMax;
 
-    if (currentPosition >= threshold) {
+    if (currentPosition == max) {
       if (!isLoading) {
         isLoading = true;
-        movie == false ?
-        await fetchMovies(pageNumber:nextPage++)
+        movie == false
+            ? await fetchMovies(pageNumber: nextPage++)
             : debugPrint("Stop Pagination");
         isLoading = false;
       }
     }
   }
 
-
-
   /// Fetch Result Search Movies Pagination
-
 
   List<MovieEntity> resultSearchMovies = [];
 
@@ -83,81 +80,94 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   bool resultSearch = false;
 
-  bool isSearch = false;
-
-  int nextPageSearch = 1;
-
-  bool isLoadingSearch = false;
-
-  Future<void> fetchResultSearchMovies({required SearchModel searchModel}) async {
+  Future<void> fetchResultSearchMovies(
+      {required SearchModel searchModel}) async {
     if (searchModel.pageNumber == 0) {
-      resultSearch = false ;
-      nextPageSearch  = 1 ;
+      resultSearch = false;
+      nextPageSearch = 1;
       resultSearchMovies.clear();
-      emit(MoviesSearchLoadingState());
+      emit(MoviesSearchLoading());
     } else {
-      emit(MoviesSearchPaginationLoadingState());
+      emit(MoviesSearchPaginationLoading());
     }
     var result = await fetchResultSearchMoviesUseCase.call(searchModel);
     result.fold((error) {
       if (searchModel.pageNumber == 0) {
-        emit(MoviesSearchFailureState(error.message));
+        emit(MoviesSearchFailure(error.message));
       } else {
-        emit(MoviesSearchPaginationFailureState(error.message));
+        emit(MoviesSearchPaginationFailure(error.message));
       }
     }, (results) {
       if (searchModel.pageNumber == 0) {
-        resultSearchMovies.clear();
-        resultSearchMovies.addAll(results);
-        emit(MoviesSearchSuccessState(results));
+        if (results.isNotEmpty) {
+          resultSearchMovies.clear();
+          resultSearchMovies.addAll(results);
+          emit(MoviesSearchSuccess());
+        } else {
+          resultSearchMovies.clear();
+          emit(MoviesSearchSuccess());
+        }
       } else {
         if (results.isEmpty) {
           resultSearch = true;
-          showToast(text: "There are no other movies", state: ToastStates.warning);
-          emit(MoviesSearchPaginationSuccessState(results));
+          showToast(
+              text: "There are no other movies", state: ToastStates.warning);
+          emit(MoviesSearchPaginationSuccess());
+        } else {
+          resultSearchMovies.addAll(results);
+          emit(MoviesSearchPaginationSuccess());
         }
-        resultSearchMovies.addAll(results);
-        emit(MoviesSearchPaginationSuccessState(results));
       }
     });
   }
 
-  void stopSearch(){
-    isSearch = false ;
+  bool isSearch = false;
+
+  void stopSearch() {
+    isSearch = false;
     emit(ChangeUi());
   }
 
-  void playSearch(){
-    isSearch = true ;
+  void playSearch() {
+    isSearch = true;
     emit(ChangeUi());
   }
+
+  void search({required String val}) {
+    if (val.isEmpty) {
+      stopSearch();
+    } else {
+      playSearch();
+      emit(MoviesSearchDelayLoading());
+      Future.delayed(const Duration(seconds: 2)).then((value) {
+        fetchResultSearchMovies(searchModel: SearchModel(0, searchCtrl.text));
+      });
+    }
+  }
+
+  late final ScrollController scrollControllerSearchMovies;
 
   void pageInitSearchMovies() {
     scrollControllerSearchMovies = ScrollController();
     scrollControllerSearchMovies.addListener(scrollListenerSearchMovies);
   }
 
+  int nextPageSearch = 1;
+  bool isLoadingSearch = false;
+
   void scrollListenerSearchMovies() async {
     final currentPosition = scrollControllerSearchMovies.position.pixels;
     final scrollMax = scrollControllerSearchMovies.position.maxScrollExtent;
-    final threshold = scrollMax;
-
-    if (currentPosition >= threshold) {
+    final max = scrollMax;
+    if (currentPosition == max) {
       if (!isLoadingSearch) {
         isLoadingSearch = true;
         resultSearch == false
-            ? await fetchResultSearchMovies(searchModel: SearchModel(nextPageSearch++, searchCtrl.text))
+            ? await fetchResultSearchMovies(
+                searchModel: SearchModel(nextPageSearch++, searchCtrl.text))
             : debugPrint("Stop Pagination");
         isLoadingSearch = false;
       }
     }
   }
-
-
-
-
-
-
-
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/widget/custom_error.dart';
+import 'package:movie_app/core/widget/fade_animation.dart';
 import 'package:movie_app/features/movie_details/presentation/cubit/movie_details_cubit.dart';
 import 'package:movie_app/features/movie_details/presentation/views/widgets/some_details.dart';
 import 'custom_app_bar_movie_details.dart';
@@ -32,19 +33,23 @@ class CustomDetails extends StatelessWidget {
                       : Expanded(
                           child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Column(children: [
-                            CustomImageMovieDetails(
-                                imageUrl: cubit.details!.image.toString()),
-                            SomeDetails(
-                              name: cubit.details!.movieName,
-                              desc: cubit.details!.desc.toString(),
-                              date: cubit.details!.date.toString(),
-                              numberOfComics: cubit.details!.numbersOfComics.toString(),
-                              numbersOfEvents: cubit.details!.numbersOfEvents.toString(),
-                              numbersOfSeries: cubit.details!.numbersOfSeries.toString(),
-                              numbersOfStories: cubit.details!.numbersOfStories.toString(),
-                            ),
-                          ]),
+                          child: FadeAnimation(
+                            0.2,
+                            1,
+                            Column(children: [
+                              CustomImageMovieDetails(
+                                  imageUrl: cubit.details!.image.toString()),
+                              SomeDetails(
+                                name: cubit.details!.movieName,
+                                desc: cubit.details!.desc.toString(),
+                                date: cubit.details!.date.toString(),
+                                numberOfComics: cubit.details!.numbersOfComics.toString(),
+                                numbersOfEvents: cubit.details!.numbersOfEvents.toString(),
+                                numbersOfSeries: cubit.details!.numbersOfSeries.toString(),
+                                numbersOfStories: cubit.details!.numbersOfStories.toString(),
+                              ),
+                            ]),
+                          ),
                         ))
             ],
           ),

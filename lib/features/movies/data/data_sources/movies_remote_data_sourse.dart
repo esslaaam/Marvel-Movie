@@ -19,7 +19,6 @@ class MoviesRemoteDataSourceImpl extends MoviesRemoteDataSource {
     var data = await ApiServices().get(
         endPoint: "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * pageNumber}");
     List<MovieEntity> movies = getListMovies(data);
-
     return movies;
   }
 
@@ -33,8 +32,7 @@ class MoviesRemoteDataSourceImpl extends MoviesRemoteDataSource {
 
   @override
   Future<List<MovieEntity>> fetchSearchMovies({required SearchModel searchModel}) async {
-    debugPrint(
-        "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * searchModel.pageNumber}&nameStartsWith=${searchModel.textSearch}");
+    debugPrint("${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * searchModel.pageNumber}&nameStartsWith=${searchModel.textSearch}");
     var data = await ApiServices().get(
         endPoint: "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * searchModel.pageNumber}&nameStartsWith=${searchModel.textSearch}");
     List<MovieEntity> moviesResult = getListMovies(data);

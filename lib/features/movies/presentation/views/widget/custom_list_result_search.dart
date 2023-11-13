@@ -15,19 +15,27 @@ class CustomMovieResultSearchList extends StatelessWidget {
     return BlocBuilder<MoviesCubit, MoviesState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<MoviesCubit>(context);
-        return state is MoviesSearchLoadingState
+        return state is MoviesSearchLoading || state is MoviesSearchDelayLoading
             ? const CustomMovieListLoading()
-            : state is MoviesSearchFailureState
+            : state is MoviesSearchFailure
                 ? CustomError(
                     errMsg: state.errMsg,
                     onPressed: () {
-                      cubit.fetchResultSearchMovies(searchModel: SearchModel(0, cubit.searchCtrl.text));
+                      cubit.fetchResultSearchMovies(
+                          searchModel: SearchModel(0, cubit.searchCtrl.text));
                     })
-                : cubit.resultSearchMovies.isEmpty
-                    ? const MoviesEmpty(text: "There are no search results for movies")
-                    : ListMovies(
-                        controller: cubit.scrollControllerSearchMovies,
-                        movies: cubit.resultSearchMovies);
+                : state is MoviesSearchPaginationFailure
+                    ? CustomError(
+                        errMsg: state.errMsg,
+                        onPressed: () {
+                          cubit.fetchResultSearchMovies(searchModel: SearchModel(cubit.nextPageSearch - 1, cubit.searchCtrl.text));
+                        })
+                    : cubit.resultSearchMovies.isEmpty
+                        ? const MoviesEmpty(
+                            text: "There are no search results for movies")
+                        : ListMovies(
+                            controller: cubit.scrollControllerSearchMovies,
+                            movies: cubit.resultSearchMovies);
       },
     );
   }

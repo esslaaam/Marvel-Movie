@@ -5,19 +5,23 @@ import 'package:movie_app/core/utils/styles.dart';
 
 class CustomSearchFormField extends StatelessWidget {
   final void Function(String) onSearchChanged;
-  final TextEditingController controller ;
+  final TextEditingController controller;
 
-  const CustomSearchFormField({super.key, required this.onSearchChanged, required this.controller});
+  const CustomSearchFormField(
+      {super.key,
+      required this.onSearchChanged,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width(context)*0.04,vertical: height(context)*0.02),
+      padding: EdgeInsets.symmetric(horizontal: width(context) * 0.04, vertical: height(context) * 0.02),
       child: TextFormField(
         onChanged: onSearchChanged,
         cursorColor: AppColors.kWhite,
         style: Styles.textStyle15,
         controller: controller,
+        keyboardType: TextInputType.text,
         onTapOutside: (event) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
@@ -30,9 +34,12 @@ class CustomSearchFormField extends StatelessWidget {
               horizontal: width(context) * 0.035,
               vertical: height(context) * 0.015),
           errorBorder: buildOutlineInputBorder(color: AppColors.kRed),
-          border: buildOutlineInputBorder(color: AppColors.kBorderRadiusField.withOpacity(0.66)),
-          focusedBorder: buildOutlineInputBorder(color: AppColors.kBorderRadiusField.withOpacity(0.66)),
-          enabledBorder: buildOutlineInputBorder(color: AppColors.kBorderRadiusField.withOpacity(0.66)),
+          border: buildOutlineInputBorder(
+              color: AppColors.kBorderRadiusField.withOpacity(0.66)),
+          focusedBorder: buildOutlineInputBorder(
+              color: AppColors.kBorderRadiusField.withOpacity(0.66)),
+          enabledBorder: buildOutlineInputBorder(
+              color: AppColors.kBorderRadiusField.withOpacity(0.66)),
         ),
       ),
     );

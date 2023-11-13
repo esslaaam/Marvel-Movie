@@ -14,13 +14,25 @@ class CustomMovieList extends StatelessWidget {
     return BlocBuilder<MoviesCubit, MoviesState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<MoviesCubit>(context);
-        return state is MoviesLoadingState
+        return state is MoviesLoading
             ? const CustomMovieListLoading()
-            : state is MoviesFailureState
-                ? CustomError(errMsg: state.errMsg, onPressed: () {cubit.fetchMovies();})
-                : cubit.homeMovies.isEmpty
-                    ? const MoviesEmpty(text: "There are no movies")
-                    : ListMovies(controller: cubit.scrollControllerMovies, movies:cubit.homeMovies);
+            : state is MoviesFailure
+                ? CustomError(
+                    errMsg: state.errMsg,
+                    onPressed: () {
+                      cubit.fetchMovies();
+                    })
+                : state is MoviesPaginationFailure
+                    ? CustomError(
+                        errMsg: state.errMsg,
+                        onPressed: () {
+                          cubit.fetchMovies(pageNumber: cubit.nextPage - 1);
+                        })
+                    : cubit.homeMovies.isEmpty
+                        ? const MoviesEmpty(text: "There are no movies")
+                        : ListMovies(
+                            controller: cubit.scrollControllerMovies,
+                            movies: cubit.homeMovies);
       },
     );
   }
