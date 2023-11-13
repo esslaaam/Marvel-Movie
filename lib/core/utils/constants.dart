@@ -12,10 +12,11 @@ double height(BuildContext context) {
 const String kAlmarai = "Almarai";
 const String kApiKey = "d58e28b9d1481eefde876995ddddc816";
 const String kHashKey = "bdf3ea30f988f407f46064f33e9db5a5";
-const String kMoviesBox = "movies_box";
+const String kTs = "1699611552563";
 const String kMovieDetailsBox = "movie_details_box";
 
 class AppFonts {
+  static final double t30 = 30.sp;
   static final double t26 = 26.sp;
   static final double t24 = 24.sp;
   static final double t22 = 22.sp;
@@ -33,4 +34,6 @@ class AppFonts {
 
 class AppRadius {
   static final double r10 = 10.r;
+  static final double r15 = 15.r;
+  static final double r25 = 25.r;
 }

@@ -5,7 +5,6 @@ import 'package:movie_app/features/movie_details/data/data_sources/movie_details
 import 'package:movie_app/features/movie_details/data/data_sources/movie_details_remote_data_sourse.dart';
 import 'package:movie_app/features/movie_details/domain/entities/movie_details_entity.dart';
 import 'package:movie_app/features/movie_details/domain/repositories/movie_details_repo.dart';
-import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 
 class MovieDetailsReposImpl extends MovieDetailsRepo {
   final MovieDetailsLocalDataSource detailsLocalDataSource;
@@ -17,27 +16,22 @@ class MovieDetailsReposImpl extends MovieDetailsRepo {
       required this.detailsRemoteDataSource});
 
   @override
-  Future<Either<Failure, MovieDetailsEntity>> fetchMovieDetails({required int id}) {
-    // TODO: implement fetchMovieDetails
-    throw UnimplementedError();
+  Future<Either<Failure, MovieDetailsEntity>> fetchMovieDetails(
+      {required int id}) async {
+    MovieDetailsEntity? moviesDetails;
+    try {
+      moviesDetails = detailsLocalDataSource.fetchMovieDetails(id: id);
+      if (moviesDetails != null) {
+        return right(moviesDetails);
+      } else {
+        moviesDetails = await detailsRemoteDataSource.fetchMovieDetails(id: id);
+        return right(moviesDetails);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
   }
-
-  // @override
-  // Future<Either<Failure, List<MovieEntity>>> fetchMovieDetails() async {
-  //   List<MovieEntity> moviesDetails;
-  //   try {
-  //     moviesDetails = detailsLocalDataSource.fetchMovieDetails();
-  //     if (moviesDetails.isNotEmpty) {
-  //       return right(moviesDetails);
-  //     } else {
-  //       moviesDetails = await detailsRemoteDataSource.fetchMovieDetails();
-  //       return right(moviesDetails);
-  //     }
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       return left(ServerFailure.fromDioError(e));
-  //     }
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
 }

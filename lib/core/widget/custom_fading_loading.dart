@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CustomFadingWidget extends StatefulWidget {
+class CustomFading extends StatefulWidget {
   final Widget child;
 
-  const CustomFadingWidget({super.key, required this.child});
+  const CustomFading({super.key, required this.child});
 
   @override
-  State<CustomFadingWidget> createState() => _CustomFadingWidgetState();
+  State<CustomFading> createState() => _CustomFadingState();
 }
 
-class _CustomFadingWidgetState extends State<CustomFadingWidget> with SingleTickerProviderStateMixin {
+class _CustomFadingState extends State<CustomFading> with SingleTickerProviderStateMixin {
   late Animation animation;
 
   late AnimationController animationController;

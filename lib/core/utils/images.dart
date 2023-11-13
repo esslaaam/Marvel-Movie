@@ -1,4 +1,4 @@
 class AppImages {
-  static const String logo = "assets/images/icons/movie.png";
-  static const String logo2 = "assets/images/icons/movie-icon-15140.png";
+  static const String logo = "assets/images/icons/marvel_logo.png";
+  static const String imageNotFound = "assets/images/icons/image_not_found.png";
 }

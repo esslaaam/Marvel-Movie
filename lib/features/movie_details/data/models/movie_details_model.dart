@@ -1,4 +1,6 @@
-class MovieDetailsModel {
+import 'package:movie_app/features/movie_details/domain/entities/movie_details_entity.dart';
+
+class MovieDetailsModel extends MovieDetailsEntity {
   int? code;
   String? status;
   String? copyright;
@@ -9,23 +11,33 @@ class MovieDetailsModel {
 
   MovieDetailsModel(
       {this.code,
-        this.status,
-        this.copyright,
-        this.attributionText,
-        this.attributionHTML,
-        this.etag,
-        this.data});
+      this.status,
+      this.copyright,
+      this.attributionText,
+      this.attributionHTML,
+      this.etag,
+      this.data})
+      : super(
+            filmId: data!.results![0].id!,
+            date: data.results![0].modified.toString(),
+            desc: data.results![0].description.toString(),
+            movieName: data.results![0].name.toString(),
+            image: "${data.results![0].thumbnail!.path.toString()}.${data.results![0].thumbnail!.extension.toString()}",
+            numbersOfComics: data.results![0].comics!.available!,
+            numbersOfEvents: data.results![0].events!.available!,
+            numbersOfSeries: data.results![0].series!.available!,
+            numbersOfStories: data.results![0].stories!.available!);
 
-  MovieDetailsModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    status = json['status'];
-    copyright = json['copyright'];
-    attributionText = json['attributionText'];
-    attributionHTML = json['attributionHTML'];
-    etag = json['etag'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  factory MovieDetailsModel.fromJson(Map<String, dynamic> json) {
+    return MovieDetailsModel(
+        code: json['code'],
+        status: json['status'],
+        copyright: json['copyright'],
+        attributionText: json['attributionText'],
+        attributionHTML: json['attributionHTML'],
+        etag: json['etag'],
+        data: json['data'] != null ? Data.fromJson(json['data']) : null);
   }
-
 }
 
 class Data {
@@ -45,11 +57,10 @@ class Data {
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add( Results.fromJson(v));
+        results!.add(Results.fromJson(v));
       });
     }
   }
-
 }
 
 class Results {
@@ -60,23 +71,23 @@ class Results {
   Thumbnail? thumbnail;
   String? resourceURI;
   Comics? comics;
-  Comics? series;
-  Comics? stories;
+  Series? series;
+  Stories? stories;
   Events? events;
   List<Urls>? urls;
 
   Results(
       {this.id,
-        this.name,
-        this.description,
-        this.modified,
-        this.thumbnail,
-        this.resourceURI,
-        this.comics,
-        this.series,
-        this.stories,
-        this.events,
-        this.urls});
+      this.name,
+      this.description,
+      this.modified,
+      this.thumbnail,
+      this.resourceURI,
+      this.comics,
+      this.series,
+      this.stories,
+      this.events,
+      this.urls});
 
   Results.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -84,17 +95,14 @@ class Results {
     description = json['description'];
     modified = json['modified'];
     thumbnail = json['thumbnail'] != null
-        ?  Thumbnail.fromJson(json['thumbnail'])
+        ? Thumbnail.fromJson(json['thumbnail'])
         : null;
     resourceURI = json['resourceURI'];
-    comics =
-    json['comics'] != null ?  Comics.fromJson(json['comics']) : null;
-    series =
-    json['series'] != null ?  Comics.fromJson(json['series']) : null;
+    comics = json['comics'] != null ? Comics.fromJson(json['comics']) : null;
+    series = json['series'] != null ? Series.fromJson(json['series']) : null;
     stories =
-    json['stories'] != null ?  Comics.fromJson(json['stories']) : null;
-    events =
-    json['events'] != null ?  Events.fromJson(json['events']) : null;
+        json['stories'] != null ? Stories.fromJson(json['stories']) : null;
+    events = json['events'] != null ? Events.fromJson(json['events']) : null;
     if (json['urls'] != null) {
       urls = <Urls>[];
       json['urls'].forEach((v) {
@@ -102,7 +110,6 @@ class Results {
       });
     }
   }
-
 }
 
 class Thumbnail {
@@ -136,21 +143,47 @@ class Comics {
     }
     returned = json['returned'];
   }
-
 }
 
+class Series {
+  int? available;
+  String? collectionURI;
+  List<Items>? items;
+  int? returned;
 
-class Items {
-  String? resourceURI;
-  String? name;
-  String? type;
+  Series({this.available, this.collectionURI, this.items, this.returned});
 
-  Items({this.resourceURI, this.name, this.type});
+  Series.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(Items.fromJson(v));
+      });
+    }
+    returned = json['returned'];
+  }
+}
 
-  Items.fromJson(Map<String, dynamic> json) {
-    resourceURI = json['resourceURI'];
-    name = json['name'];
-    type = json['type'];
+class Stories {
+  int? available;
+  String? collectionURI;
+  List<Items>? items;
+  int? returned;
+
+  Stories({this.available, this.collectionURI, this.items, this.returned});
+
+  Stories.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(Items.fromJson(v));
+      });
+    }
+    returned = json['returned'];
   }
 }
 
@@ -173,7 +206,20 @@ class Events {
     }
     returned = json['returned'];
   }
+}
 
+class Items {
+  String? resourceURI;
+  String? name;
+  String? type;
+
+  Items({this.resourceURI, this.name, this.type});
+
+  Items.fromJson(Map<String, dynamic> json) {
+    resourceURI = json['resourceURI'];
+    name = json['name'];
+    type = json['type'];
+  }
 }
 
 class Urls {
@@ -186,5 +232,4 @@ class Urls {
     type = json['type'];
     url = json['url'];
   }
-
 }

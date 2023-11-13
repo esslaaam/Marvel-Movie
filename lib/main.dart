@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:movie_app/core/utils/colors.dart';
+import 'package:movie_app/features/movie_details/domain/entities/movie_details_entity.dart';
 import 'core/utils/bloc_observer.dart';
 import 'core/utils/constants.dart';
+import 'core/utils/functions/setup_locator.dart';
 import 'features/splash/presentation/views/splash_view.dart';
 
 /// flutter packages pub run build_runner build ===> TO GENERATE TYPE ADAPTER
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupServiceLocator();
+  await Hive.initFlutter();
+  Hive.registerAdapter(MovieDetailsEntityAdapter());
+  await Hive.openBox<MovieDetailsEntity>(kMovieDetailsBox);
   Bloc.observer = MyBlocObserver();
   runApp(const MovieApp());
 }
@@ -28,7 +36,7 @@ class MovieApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         darkTheme: ThemeData(
           fontFamily: kAlmarai,
-          scaffoldBackgroundColor: Colors.black12,
+          scaffoldBackgroundColor: AppColors.kPrimary,
           useMaterial3: true,
         ),
         home: child,
@@ -37,4 +45,3 @@ class MovieApp extends StatelessWidget {
     );
   }
 }
-

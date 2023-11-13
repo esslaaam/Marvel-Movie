@@ -30,7 +30,7 @@ class MovieModel extends MovieEntity {
           date: modified.toString(),
           desc: description.toString(),
           movieName: name.toString(),
-          image: "${thumbnail!.path.toString()}${thumbnail.extension.toString()}",
+          image: "${thumbnail!.path.toString()}.${thumbnail.extension.toString()}",
         );
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {

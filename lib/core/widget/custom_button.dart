@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/utils/colors.dart';
+import 'package:movie_app/core/utils/constants.dart';
+import 'package:movie_app/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
+  final void Function() onPressed;
   final String text ;
-  final TextStyle textStyle ;
-  final Color backgroundColor ;
-  final BorderRadiusGeometry? borderRadius ;
-  const CustomButton({super.key, required this.backgroundColor, required this.text, required this.textStyle, this.borderRadius});
+
+  const CustomButton({super.key, required this.onPressed, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      width: width(context) * 0.3,
       child: TextButton(
-          onPressed: () {},
+          onPressed: onPressed,
           style: TextButton.styleFrom(
-            backgroundColor: backgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: borderRadius ?? BorderRadius.circular(12)
-            )
-          ),
-          child: Text(text, style: textStyle)),
+              backgroundColor: AppColors.kSecondaryBold,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.r10))),
+          child: Text(text, style: Styles.textStyle16)),
     );
   }
 }

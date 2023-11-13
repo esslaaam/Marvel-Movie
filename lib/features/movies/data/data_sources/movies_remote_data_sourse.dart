@@ -1,50 +1,43 @@
-import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
+import 'package:movie_app/core/local/app_config.dart';
+import 'package:movie_app/core/utils/api_services.dart';
+import 'package:movie_app/core/utils/constants.dart';
+import 'package:movie_app/features/movies/data/models/movie_model.dart';
+import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 
 abstract class MoviesRemoteDataSource {
   Future<List<MovieEntity>> fetchMovies({int pageNumber = 0});
 
+  Future<List<MovieEntity>> fetchSearchMovies({required SearchModel searchModel});
 }
 
 class MoviesRemoteDataSourceImpl extends MoviesRemoteDataSource {
   @override
-  Future<List<MovieEntity>> fetchMovies({int pageNumber = 0}) {
-    // TODO: implement fetchMovies
-    throw UnimplementedError();
+  Future<List<MovieEntity>> fetchMovies({int pageNumber = 0}) async {
+    debugPrint("${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * pageNumber}");
+    var data = await ApiServices().get(
+        endPoint: "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * pageNumber}");
+    List<MovieEntity> movies = getListMovies(data);
+
+    return movies;
   }
-  // final ApiServices apiServices;
-  //
-  // HomeRemoteDataSourceImpl(this.apiServices);
-  //
-  // @override
-  // Future<List<BookEntity>> fetchBookImages({int pageNumber = 0}) async {
-  //   var data = await apiServices.get(endPoint: "volumes?q=programming&Filtering=free-ebooks&startIndex=${pageNumber * 10}");
-  //   List<BookEntity> books = getListBooks(data);
-  //   saveBooksData(books,kFeaturedBox);
-  //   return books;
-  // }
-  //
-  //
-  //
-  // @override
-  // Future<List<BookEntity>> fetchBooks() async {
-  //   var data = await apiServices.get(endPoint: "volumes?q=programming&Filtering=free-ebooks&Sorting=newest");
-  //   List<BookEntity> books = getListBooks(data);
-  //   saveBooksData(books,kNewestBox);
-  //   return books;
-  // }
-  //
-  // List<BookEntity> getListBooks(Map<String, dynamic> data) {
-  //   List<BookEntity> books = [];
-  //
-  //   for (var booksMaps in data["items"]) {
-  //     books.add(BookModel.fromJson(booksMaps));
-  //   }
-  //   return books;
-  // }
-  //
-  // void saveBooksData(List<BookEntity> books , String boxName) {
-  //   var box = Hive.box<BookEntity>(boxName);
-  //   box.addAll(books);
-  // }
+
+  List<MovieEntity> getListMovies(Map<String, dynamic> data) {
+    List<MovieEntity> movies = [];
+    for (var moviesMaps in data["data"]["results"]) {
+      movies.add(MovieModel.fromJson(moviesMaps));
+    }
+    return movies;
+  }
+
+  @override
+  Future<List<MovieEntity>> fetchSearchMovies({required SearchModel searchModel}) async {
+    debugPrint(
+        "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * searchModel.pageNumber}&nameStartsWith=${searchModel.textSearch}");
+    var data = await ApiServices().get(
+        endPoint: "${AppConfig.characters}?apikey=$kApiKey&hash=$kHashKey&ts=$kTs&limit=15&offset=${15 * searchModel.pageNumber}&nameStartsWith=${searchModel.textSearch}");
+    List<MovieEntity> moviesResult = getListMovies(data);
+    return moviesResult;
+  }
 }

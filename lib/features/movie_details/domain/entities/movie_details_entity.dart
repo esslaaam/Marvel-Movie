@@ -2,10 +2,10 @@ import 'package:hive/hive.dart';
 
 part 'movie_details_entity.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class MovieDetailsEntity {
   @HiveField(0)
-  final int filmId;
+  final int? filmId;
   @HiveField(1)
   final String? image;
   @HiveField(2)
