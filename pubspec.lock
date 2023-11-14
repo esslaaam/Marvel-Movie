@@ -294,6 +294,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.0"
+  flutter_staggered_animations:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_animations
+      sha256: "81d3c816c9bb0dca9e8a5d5454610e21ffb068aedb2bde49d2f8d04f75538351"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -616,14 +624,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  simple_animations:
-    dependency: "direct main"
-    description:
-      name: simple_animations
-      sha256: cd8b4685de36a1d4bd7082d860415baf3772403402a8a022bd209cf856164386
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
   sky_engine:
     dependency: transitive
     description: flutter

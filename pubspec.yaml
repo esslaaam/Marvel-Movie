@@ -21,7 +21,7 @@ dependencies:
   dio: ^5.3.3
   dartz: ^0.10.1
   cached_network_image: ^3.2.3
-  simple_animations: ^4.1.0
+  flutter_staggered_animations: ^1.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   fluttertoast: ^8.2.2

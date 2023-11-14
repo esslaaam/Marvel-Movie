@@ -2,38 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/core/utils/constants.dart';
 import 'package:movie_app/core/utils/images.dart';
 import 'package:movie_app/core/utils/my_navigate.dart';
-import 'package:movie_app/core/widget/fade_animation.dart';
 import 'package:movie_app/features/movies/presentation/views/movies_view.dart';
 
 class SplashViewBody extends StatefulWidget {
-  const SplashViewBody({super.key});
+  const SplashViewBody({Key? key}) : super(key: key);
 
   @override
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
 
-class _SplashViewBodyState extends State<SplashViewBody> {
+class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> opacityAnimation;
+
   @override
   void initState() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(animationController);
+
+    animationController.forward();
+
     navigateToHome();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeAnimation(
-      1,
-      2,
-      Center(child: Image.asset(
-        AppImages.logo,
-        width: width(context) * 0.7,
-      )),
+    return AnimatedBuilder(
+      animation: opacityAnimation,
+      builder: (context, child) {
+        return Center(
+          child: Opacity(
+            opacity: opacityAnimation.value,
+            child: Image.asset(
+              AppImages.logo,
+              width: width(context) * 0.6,
+            ),
+          ),
+        );
+      },
     );
   }
 
   void navigateToHome() {
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       navigateAndFinish(context: context, widget: const MoviesView());
     });
   }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 }
+

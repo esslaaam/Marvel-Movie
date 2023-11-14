@@ -134,14 +134,14 @@ class MoviesCubit extends Cubit<MoviesState> {
   }
 
   void search({required String val}) {
-    if (val.isEmpty) {
-      stopSearch();
-    } else {
+    if (val.isNotEmpty) {
       playSearch();
       emit(MoviesSearchDelayLoading());
       Future.delayed(const Duration(seconds: 2)).then((value) {
-        fetchResultSearchMovies(searchModel: SearchModel(0, searchCtrl.text));
+        searchCtrl.text.isNotEmpty ? fetchResultSearchMovies(searchModel: SearchModel(0, searchCtrl.text)):debugPrint("Stop");
       });
+    } else {
+      stopSearch();
     }
   }
 
