@@ -11,7 +11,8 @@ class SplashViewBody extends StatefulWidget {
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
 
-class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProviderStateMixin {
+class _SplashViewBodyState extends State<SplashViewBody>
+    with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> opacityAnimation;
 
@@ -53,9 +54,12 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
   }
 
   void navigateToHome() {
-    Future.delayed(const Duration(seconds: 3), () {
-      navigateAndFinish(context: context, widget: const MoviesView());
-    });
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        navigateAndFinish(context: context, widget: const MoviesView());
+      },
+    );
   }
 
   @override
@@ -64,4 +68,3 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
     super.dispose();
   }
 }
-

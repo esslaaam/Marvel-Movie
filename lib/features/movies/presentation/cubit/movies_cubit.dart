@@ -36,10 +36,10 @@ class MoviesCubit extends Cubit<MoviesState> {
     }, (movies) {
       if (movies.isEmpty) {
         movie = true;
-        showToast(
-            text: "There are no other movies", state: ToastStates.warning);
+        showToast(text: "There are no other movies", state: ToastStates.warning);
         emit(MoviesSuccess());
       } else {
+        print(movies);
         homeMovies.addAll(movies);
         emit(MoviesSuccess());
       }
@@ -158,8 +158,7 @@ class MoviesCubit extends Cubit<MoviesState> {
   void scrollListenerSearchMovies() async {
     final currentPosition = scrollControllerSearchMovies.position.pixels;
     final scrollMax = scrollControllerSearchMovies.position.maxScrollExtent;
-    final max = scrollMax;
-    if (currentPosition == max) {
+    if (currentPosition == scrollMax) {
       if (!isLoadingSearch) {
         isLoadingSearch = true;
         resultSearch == false

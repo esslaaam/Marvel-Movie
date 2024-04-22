@@ -10,8 +10,7 @@ class FetchMovieDetailsUseCase extends UseCases<MovieDetailsEntity, int> {
   FetchMovieDetailsUseCase(this.movieDetailsRepo);
 
   @override
-  Future<Either<Failure, MovieDetailsEntity>> call([int? param]) async{
+  Future<Either<Failure, MovieDetailsEntity>> call([int? param]) async {
     return await movieDetailsRepo.fetchMovieDetails(id: param!);
   }
-
 }

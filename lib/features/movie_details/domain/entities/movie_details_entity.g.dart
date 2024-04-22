@@ -8,7 +8,7 @@ part of 'movie_details_entity.dart';
 
 class MovieDetailsEntityAdapter extends TypeAdapter<MovieDetailsEntity> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   MovieDetailsEntity read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class MovieDetailsEntityAdapter extends TypeAdapter<MovieDetailsEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MovieDetailsEntity(
-      filmId: fields[0] as int,
+      filmId: fields[0] as int?,
       image: fields[1] as String?,
       movieName: fields[2] as String,
       date: fields[3] as String?,

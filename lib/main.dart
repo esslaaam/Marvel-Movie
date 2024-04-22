@@ -10,6 +10,8 @@ import 'core/utils/functions/setup_locator.dart';
 import 'features/splash/presentation/views/splash_view.dart';
 
 /// flutter packages pub run build_runner build ===> TO GENERATE TYPE ADAPTER
+/// Timer Pagination
+/// Search + List Movies One List
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

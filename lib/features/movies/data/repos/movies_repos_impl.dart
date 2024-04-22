@@ -12,13 +12,13 @@ class MoviesReposImpl extends MoviesRepo {
   MoviesReposImpl({required this.moviesRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<MovieEntity>>> fetchMovies(
-      {int pageNumber = 0}) async {
+  Future<Either<Failure, List<MovieEntity>>> fetchMovies({int pageNumber = 0}) async {
     List<MovieEntity> movies;
     try {
       movies = await moviesRemoteDataSource.fetchMovies(pageNumber: pageNumber);
       return right(movies);
     } catch (e) {
+      print(e);
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));
       }
