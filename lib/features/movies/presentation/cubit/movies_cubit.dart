@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/widget/custom_toast.dart';
 import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
@@ -8,6 +9,7 @@ import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_m
 
 part 'movies_state.dart';
 
+@injectable
 class MoviesCubit extends Cubit<MoviesState> {
   final FetchMoviesUseCase fetchMoviesUseCase;
   final FetchResultSearchMoviesUseCase fetchResultSearchMoviesUseCase;
@@ -39,7 +41,7 @@ class MoviesCubit extends Cubit<MoviesState> {
         showToast(text: "There are no other movies", state: ToastStates.warning);
         emit(MoviesSuccess());
       } else {
-        print(movies);
+        debugPrint(movies.toString());
         homeMovies.addAll(movies);
         emit(MoviesSuccess());
       }

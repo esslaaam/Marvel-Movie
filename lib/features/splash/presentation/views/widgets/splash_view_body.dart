@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/core/utils/constants.dart';
 import 'package:movie_app/core/utils/images.dart';
 import 'package:movie_app/core/utils/my_navigate.dart';
-import 'package:movie_app/features/movies/presentation/views/movies_view.dart';
+import '../../../../movies/presentation/views/movies_screen.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
     Future.delayed(
       const Duration(seconds: 3),
       () {
-        navigateAndFinish(context: context, widget: const MoviesView());
+        navigateAndFinish(context: context, widget: const MoviesScreen());
       },
     );
   }

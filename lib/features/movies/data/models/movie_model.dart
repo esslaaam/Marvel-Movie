@@ -1,6 +1,6 @@
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 
-class MoviesModel {
+class MoviesResponseModel {
   int? code;
   String? status;
   String? copyright;
@@ -9,7 +9,7 @@ class MoviesModel {
   String? etag;
   Data? data;
 
-  MoviesModel(
+  MoviesResponseModel(
       {this.code,
       this.status,
       this.copyright,
@@ -18,7 +18,7 @@ class MoviesModel {
       this.etag,
       this.data});
 
-  MoviesModel.fromJson(Map<String, dynamic> json) {
+  MoviesResponseModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     copyright = json['copyright'];
@@ -34,9 +34,9 @@ class Data {
   int? limit;
   int? total;
   int? count;
-  List<Results>? results;
+  List<MovieModel>? movieModel;
 
-  Data({this.offset, this.limit, this.total, this.count, this.results});
+  Data({this.offset, this.limit, this.total, this.count, this.movieModel});
 
   Data.fromJson(Map<String, dynamic> json) {
     offset = json['offset'];
@@ -44,15 +44,15 @@ class Data {
     total = json['total'];
     count = json['count'];
     if (json['results'] != null) {
-      results = <Results>[];
+      movieModel = <MovieModel>[];
       json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
+        movieModel!.add(MovieModel.fromJson(v));
       });
     }
   }
 }
 
-class Results extends MovieEntity {
+class MovieModel extends MovieEntity {
   int? id;
   String? name;
   String? description;
@@ -65,7 +65,7 @@ class Results extends MovieEntity {
   Comics? events;
   List<Urls>? urls;
 
-  Results(
+  MovieModel(
       {this.id,
       this.name,
       this.description,
@@ -84,8 +84,8 @@ class Results extends MovieEntity {
           movieName: name.toString(),
           image: "${thumbnail!.path.toString()}.${thumbnail.extension.toString()}",
         );
-  factory Results.fromJson(Map<String, dynamic> json) {
-    return Results(
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],

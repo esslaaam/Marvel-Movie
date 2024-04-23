@@ -21,7 +21,7 @@ class _MoviesApiClient implements MoviesApiClient {
   String? baseUrl;
 
   @override
-  Future<MoviesModel> fetchMovies({
+  Future<MoviesResponseModel> fetchMovies({
     String apiKey = kApiKey,
     String hash = kHashKey,
     String ts = kTs,
@@ -38,8 +38,8 @@ class _MoviesApiClient implements MoviesApiClient {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MoviesModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MoviesResponseModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -55,12 +55,12 @@ class _MoviesApiClient implements MoviesApiClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = MoviesModel.fromJson(_result.data!);
+    final value = MoviesResponseModel.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<MoviesModel> fetchSearchMovies({
+  Future<MoviesResponseModel> fetchSearchMovies({
     String apiKey = kApiKey,
     String hash = kHashKey,
     String ts = kTs,
@@ -79,8 +79,8 @@ class _MoviesApiClient implements MoviesApiClient {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MoviesModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MoviesResponseModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -96,7 +96,7 @@ class _MoviesApiClient implements MoviesApiClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = MoviesModel.fromJson(_result.data!);
+    final value = MoviesResponseModel.fromJson(_result.data!);
     return value;
   }
 

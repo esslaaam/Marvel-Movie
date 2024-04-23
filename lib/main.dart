@@ -15,7 +15,7 @@ import 'features/splash/presentation/views/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupServiceLocator();
+  configureDependencies();
   await Hive.initFlutter();
   Hive.registerAdapter(MovieDetailsEntityAdapter());
   await Hive.openBox<MovieDetailsEntity>(kMovieDetailsBox);

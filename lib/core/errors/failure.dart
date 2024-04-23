@@ -21,14 +21,18 @@ class ServerFailure extends Failure {
         return ServerFailure("Bad certificate with Api Server");
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-            error.response!.statusCode, error.response!);
+          error.response!.statusCode,
+          error.response!,
+        );
       case DioExceptionType.cancel:
         return ServerFailure("Request to Api Server was canceled");
       case DioExceptionType.connectionError:
-        return ServerFailure("No Internet Connection, Please Connect to Internet !");
+        return ServerFailure(
+            "No Internet Connection, Please Connect to Internet !");
       case DioExceptionType.unknown:
         if (error.type.name.contains("SocketException")) {
-          return ServerFailure("No Internet Connection, Please Connect to Internet !");
+          return ServerFailure(
+              "No Internet Connection, Please Connect to Internet !");
         }
         return ServerFailure("Opps There was an Error, Please try again");
     }

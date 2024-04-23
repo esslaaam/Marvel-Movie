@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/utils/constants.dart';
 import 'package:movie_app/features/movies/data/models/movie_model.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../core/local/app_config.dart';
+import '../../../../core/local/app_config.dart';
 
 part 'movies_api_client.g.dart';
 
@@ -12,7 +13,7 @@ abstract class MoviesApiClient {
   factory MoviesApiClient(Dio dio, {String baseUrl}) = _MoviesApiClient;
 
   @GET(AppConfig.characters)
-  Future<MoviesModel> fetchMovies({
+  Future<MoviesResponseModel> fetchMovies({
     @Query('apikey') String apiKey = kApiKey,
     @Query('hash') String hash = kHashKey,
     @Query('ts') String ts = kTs,
@@ -21,7 +22,7 @@ abstract class MoviesApiClient {
   });
 
   @GET(AppConfig.characters)
-  Future<MoviesModel> fetchSearchMovies({
+  Future<MoviesResponseModel> fetchSearchMovies({
     @Query('apikey') String apiKey = kApiKey,
     @Query('hash') String hash = kHashKey,
     @Query('ts') String ts = kTs,
