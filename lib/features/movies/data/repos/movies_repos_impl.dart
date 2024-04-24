@@ -7,15 +7,14 @@ import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies/domain/repositories/movies_repo.dart';
 
-@LazySingleton(as: MoviesRepo)
+@Injectable(as: MoviesRepo)
 class MoviesReposImpl extends MoviesRepo {
   final MoviesRemoteDataSource moviesRemoteDataSource;
 
   MoviesReposImpl({required this.moviesRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<MovieEntity>>> fetchMovies(
-      {int pageNumber = 0}) async {
+  Future<Either<Failure, List<MovieEntity>>> fetchMovies({int pageNumber = 0}) async {
     try {
       var movieResponse =
       await moviesRemoteDataSource.fetchMovies(pageNumber: pageNumber);

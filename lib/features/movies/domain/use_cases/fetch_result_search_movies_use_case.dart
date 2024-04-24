@@ -7,7 +7,7 @@ import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies/domain/repositories/movies_repo.dart';
 
-@lazySingleton
+@injectable
 class FetchResultSearchMoviesUseCase extends UseCases<List<MovieEntity>, SearchModel> {
   final MoviesRepo moviesRepo;
 

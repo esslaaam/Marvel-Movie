@@ -1,33 +1,96 @@
 part of 'movies_cubit.dart';
 
 @immutable
-abstract class MoviesState {}
-/// List Movies
-class MoviesInitial extends MoviesState {}
-class ChangeUi extends MoviesState {}
-class MoviesLoading extends MoviesState {}
-class MoviesPaginationLoading extends MoviesState {}
-class MoviesPaginationFailure extends MoviesState {
-  final String errMsg ;
-  MoviesPaginationFailure(this.errMsg);
+abstract class MoviesState extends Equatable {
+  const MoviesState();
 }
+
+/// List Movies
+class MoviesInitial extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChangeUi extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesLoading extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesPaginationLoading extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesPaginationFailure extends MoviesState {
+  final String errMsg;
+
+  const MoviesPaginationFailure(this.errMsg);
+
+  @override
+  List<Object> get props => [errMsg];
+}
+
 class MoviesFailure extends MoviesState {
   final String errMsg;
-  MoviesFailure(this.errMsg);
+
+  const MoviesFailure(this.errMsg);
+
+  @override
+  List<Object> get props => [errMsg];
 }
-class MoviesSuccess extends MoviesState {}
+
+class MoviesSuccess extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
 /// Search Movies
-class MoviesSearchLoading extends MoviesState {}
-class MoviesSearchDelayLoading extends MoviesState {}
-class MoviesSearchPaginationLoading extends MoviesState {}
-class MoviesSearchPaginationFailure extends MoviesState {
-  final String errMsg ;
-  MoviesSearchPaginationFailure(this.errMsg);
+class MoviesSearchLoading extends MoviesState {
+  @override
+  List<Object> get props => [];
 }
+
+class MoviesSearchDelayLoading extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesSearchPaginationLoading extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesSearchPaginationFailure extends MoviesState {
+  final String errMsg;
+
+  const MoviesSearchPaginationFailure(this.errMsg);
+
+  @override
+  List<Object> get props => [errMsg];
+}
+
 class MoviesSearchFailure extends MoviesState {
   final String errMsg;
-  MoviesSearchFailure(this.errMsg);
-}
-class MoviesSearchSuccess extends MoviesState {}
 
-class MoviesSearchPaginationSuccess extends MoviesState {}
+  const MoviesSearchFailure(this.errMsg);
+
+  @override
+  List<Object> get props => [
+        errMsg,
+      ];
+}
+
+class MoviesSearchSuccess extends MoviesState {
+  @override
+  List<Object> get props => [];
+}
+
+class MoviesSearchPaginationSuccess extends MoviesState {
+  @override
+  List<Object> get props => [];
+}

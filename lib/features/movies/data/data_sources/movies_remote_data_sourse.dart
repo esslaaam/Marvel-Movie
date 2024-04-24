@@ -11,7 +11,7 @@ abstract class MoviesRemoteDataSource {
       {required SearchModel searchModel});
 }
 
-@LazySingleton(as: MoviesRemoteDataSource)
+@Injectable(as: MoviesRemoteDataSource)
 class MoviesRemoteDataSourceImpl extends MoviesRemoteDataSource {
   final MoviesApiClient moviesApiClient;
 

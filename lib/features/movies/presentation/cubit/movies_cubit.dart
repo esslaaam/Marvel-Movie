@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -5,7 +6,8 @@ import 'package:movie_app/core/widget/custom_toast.dart';
 import 'package:movie_app/features/movies/data/models/search_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies/domain/use_cases/fetch_movies_use_case.dart';
-import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_movies.dart';
+
+import '../../domain/use_cases/fetch_result_search_movies_use_case.dart';
 
 part 'movies_state.dart';
 
@@ -25,6 +27,7 @@ class MoviesCubit extends Cubit<MoviesState> {
   Future<void> fetchMovies({int pageNumber = 0}) async {
     if (pageNumber == 0) {
       emit(MoviesLoading());
+      print(MoviesLoading() == MoviesLoading()) ;
     } else {
       emit(MoviesPaginationLoading());
     }

@@ -22,7 +22,7 @@ import 'package:movie_app/features/movies/domain/repositories/movies_repo.dart'
     as _i6;
 import 'package:movie_app/features/movies/domain/use_cases/fetch_movies_use_case.dart'
     as _i8;
-import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_movies.dart'
+import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_movies_use_case.dart'
     as _i9;
 import 'package:movie_app/features/movies/presentation/cubit/movies_cubit.dart'
     as _i10;
@@ -41,14 +41,13 @@ extension GetItInjectableX on _i1.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i3.Dio>(() => registerModule.dio);
     gh.factory<_i4.MoviesApiClient>(() => registerModule.getMoviesApiClient());
-    gh.lazySingleton<_i5.MoviesRemoteDataSource>(() =>
-        _i5.MoviesRemoteDataSourceImpl(
-            moviesApiClient: gh<_i4.MoviesApiClient>()));
-    gh.lazySingleton<_i6.MoviesRepo>(() => _i7.MoviesReposImpl(
+    gh.factory<_i5.MoviesRemoteDataSource>(() => _i5.MoviesRemoteDataSourceImpl(
+        moviesApiClient: gh<_i4.MoviesApiClient>()));
+    gh.factory<_i6.MoviesRepo>(() => _i7.MoviesReposImpl(
         moviesRemoteDataSource: gh<_i5.MoviesRemoteDataSource>()));
-    gh.lazySingleton<_i8.FetchMoviesUseCase>(
+    gh.factory<_i8.FetchMoviesUseCase>(
         () => _i8.FetchMoviesUseCase(gh<_i6.MoviesRepo>()));
-    gh.lazySingleton<_i9.FetchResultSearchMoviesUseCase>(
+    gh.factory<_i9.FetchResultSearchMoviesUseCase>(
         () => _i9.FetchResultSearchMoviesUseCase(gh<_i6.MoviesRepo>()));
     gh.factory<_i10.MoviesCubit>(() => _i10.MoviesCubit(
           gh<_i8.FetchMoviesUseCase>(),

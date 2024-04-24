@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/utils/constants.dart';
 import 'package:movie_app/features/movies/data/models/movie_model.dart';
 import 'package:retrofit/retrofit.dart';

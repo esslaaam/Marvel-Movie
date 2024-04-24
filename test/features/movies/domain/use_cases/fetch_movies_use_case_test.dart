@@ -12,38 +12,57 @@ import 'fetch_movies_use_case_test.mocks.dart';
 @GenerateNiceMocks(
   [
     MockSpec<MoviesRepo>(),
-    MockSpec<List<MovieEntity>>(as: Symbol("MockMoviesList"))
+    MockSpec<List<MovieEntity>>(as: Symbol("MockMoviesList")),
+    MockSpec<ServerFailure>()
   ],
 )
 void main() {
   late MoviesRepo repo;
   late FetchMoviesUseCase fetchMoviesUseCase;
-  late List<MovieEntity> expectedMovies ;
-
+  late List<MovieEntity> expectedMovies;
+  late ServerFailure expectedError;
   setUp(() {
     repo = MockMoviesRepo();
     fetchMoviesUseCase = FetchMoviesUseCase(repo);
     expectedMovies = MockMoviesList();
+    expectedError = MockServerFailure();
   });
 
-  test("should Return List of movies", () async {
-    final expectedError = ServerFailure("Error");
-    when(repo.fetchMovies()).thenThrow(
-      (realInvocation) async => Left(
-        expectedError,
-      ),
-    );
-    when(repo.fetchMovies()).thenAnswer(
-      (realInvocation) async => Right(expectedMovies),
-    );
-    final res = await fetchMoviesUseCase.call();
-    verify(repo.fetchMovies());
-    verifyNoMoreInteractions(repo);
-    expect(
-        expectedMovies,
-        res.fold(
-          (l) => expectedError,
-          (r) => expectedMovies,
-        ));
+  group("Fetch Movies Use Case", () {
+
+    test("Should Return Server Failure Error", () async {
+      when(repo.fetchMovies()).thenAnswer(
+        (realInvocation) async => Left(
+          expectedError,
+        ),
+      );
+      final res = await fetchMoviesUseCase.call();
+      verify(repo.fetchMovies());
+      verifyNoMoreInteractions(repo);
+      expect(
+          expectedError,
+          res.fold(
+            (l) => expectedError,
+            (r) => expectedMovies,
+          ));
+    });
+
+    test("Should Return List of Movies", () async {
+      when(repo.fetchMovies()).thenAnswer(
+        (realInvocation) async => Right(
+          expectedMovies,
+        ),
+      );
+      final res = await fetchMoviesUseCase.call();
+      verify(repo.fetchMovies());
+      verifyNoMoreInteractions(repo);
+      expect(
+          expectedMovies,
+          res.fold(
+            (l) => expectedError,
+            (r) => expectedMovies,
+          ));
+    });
+
   });
 }
