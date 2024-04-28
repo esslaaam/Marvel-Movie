@@ -151,6 +151,24 @@ class MockMoviesRepo extends _i1.Mock implements _i6.MoviesRepo {
       ) as _i7.Future<_i2.Either<_i8.Failure, List<_i3.MovieEntity>>>);
 }
 
+/// A class which mocks [ServerFailure].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockServerFailure extends _i1.Mock implements _i8.ServerFailure {
+  @override
+  String get message => (super.noSuchMethod(
+        Invocation.getter(#message),
+        returnValue: _i5.dummyValue<String>(
+          this,
+          Invocation.getter(#message),
+        ),
+        returnValueForMissingStub: _i5.dummyValue<String>(
+          this,
+          Invocation.getter(#message),
+        ),
+      ) as String);
+}
+
 /// A class which mocks [List].
 ///
 /// See the documentation for Mockito's code generation for more information.

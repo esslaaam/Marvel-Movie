@@ -38,8 +38,7 @@ void main() {
     /// Fetch List Of Movies
 
     test("Should Return Movies Response Model", () async {
-      MoviesResponseModel responseModel =
-          MoviesResponseModel(data: Data(movieModel: expectedMovies));
+      MoviesResponseModel responseModel = MoviesResponseModel(data: Data(movieModel: expectedMovies));
       when(moviesRemoteDataSource.fetchMovies()).thenAnswer(
         (realInvocation) async => responseModel,
       );

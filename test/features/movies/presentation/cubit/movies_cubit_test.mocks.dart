@@ -1043,3 +1043,46 @@ class MockMovieList extends _i1.Mock implements List<_i4.MovieEntity> {
         ),
       ) as _i4.MovieEntity);
 }
+
+/// A class which mocks [ServerFailure].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockServerFailure extends _i1.Mock implements _i7.ServerFailure {
+  @override
+  String get message => (super.noSuchMethod(
+        Invocation.getter(#message),
+        returnValue: _i11.dummyValue<String>(
+          this,
+          Invocation.getter(#message),
+        ),
+        returnValueForMissingStub: _i11.dummyValue<String>(
+          this,
+          Invocation.getter(#message),
+        ),
+      ) as String);
+}
+
+/// A class which mocks [SearchModel].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSearchModel extends _i1.Mock implements _i9.SearchModel {
+  @override
+  int get pageNumber => (super.noSuchMethod(
+        Invocation.getter(#pageNumber),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  String get textSearch => (super.noSuchMethod(
+        Invocation.getter(#textSearch),
+        returnValue: _i11.dummyValue<String>(
+          this,
+          Invocation.getter(#textSearch),
+        ),
+        returnValueForMissingStub: _i11.dummyValue<String>(
+          this,
+          Invocation.getter(#textSearch),
+        ),
+      ) as String);
+}

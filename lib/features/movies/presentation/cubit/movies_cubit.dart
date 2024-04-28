@@ -27,7 +27,6 @@ class MoviesCubit extends Cubit<MoviesState> {
   Future<void> fetchMovies({int pageNumber = 0}) async {
     if (pageNumber == 0) {
       emit(MoviesLoading());
-      print(MoviesLoading() == MoviesLoading()) ;
     } else {
       emit(MoviesPaginationLoading());
     }

@@ -10,11 +10,11 @@ import 'package:movie_app/features/movies/domain/use_cases/fetch_result_search_m
 
 import 'fetch_result_search_movies_use_case_test.mocks.dart';
 
-
 @GenerateNiceMocks(
   [
     MockSpec<SearchModel>(),
     MockSpec<MoviesRepo>(),
+    MockSpec<ServerFailure>(),
     MockSpec<List<MovieEntity>>(as: Symbol("MockMoviesList")),
   ],
 )
@@ -22,22 +22,18 @@ void main() {
   late MoviesRepo repo;
   late FetchResultSearchMoviesUseCase fetchResultSearchMoviesUseCase;
   late List<MovieEntity> expectedMovies;
+  late ServerFailure expectedError;
   late SearchModel searchModel;
 
   setUp(() {
     repo = MockMoviesRepo();
     fetchResultSearchMoviesUseCase = FetchResultSearchMoviesUseCase(repo);
     expectedMovies = MockMoviesList();
+    expectedError = MockServerFailure();
     searchModel = MockSearchModel();
   });
 
   test("Should Return List of Result Movies", () async {
-    final expectedError = ServerFailure("Error");
-    when(repo.fetchSearchMovies(searchModel: searchModel)).thenThrow(
-      (realInvocation) async => Left(
-        expectedError,
-      ),
-    );
     when(repo.fetchSearchMovies(searchModel: searchModel)).thenAnswer(
       (realInvocation) async => Right(expectedMovies),
     );
@@ -46,6 +42,23 @@ void main() {
     verifyNoMoreInteractions(repo);
     expect(
         expectedMovies,
+        res.fold(
+          (l) => expectedError,
+          (r) => expectedMovies,
+        ));
+  });
+
+  test("Should Return Server Failure Error", () async {
+    when(repo.fetchSearchMovies(searchModel: searchModel)).thenAnswer(
+      (realInvocation) async => Left(
+        expectedError,
+      ),
+    );
+    final res = await fetchResultSearchMoviesUseCase.call(searchModel);
+    verify(repo.fetchSearchMovies(searchModel: searchModel));
+    verifyNoMoreInteractions(repo);
+    expect(
+        expectedError,
         res.fold(
           (l) => expectedError,
           (r) => expectedMovies,
