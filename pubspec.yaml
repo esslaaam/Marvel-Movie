@@ -40,6 +40,8 @@ dev_dependencies:
   analyzer: ^6.4.1
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   mockito: ^5.4.4
   mocktail: ^1.0.3
   flutter_lints: ^2.0.0

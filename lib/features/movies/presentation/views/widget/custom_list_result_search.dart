@@ -39,6 +39,7 @@ class CustomMovieResultSearchList extends StatelessWidget {
                     ? const MoviesEmpty(
                         text: "There are no search results for movies")
                     : ListMovies(
+                        key: const Key("list_movies_search"),
                         controller: cubit.scrollControllerSearchMovies,
                         movies: cubit.resultSearchMovies);
   }

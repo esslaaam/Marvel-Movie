@@ -29,9 +29,13 @@ class ListMovies extends StatelessWidget {
                   position: index,
                   duration: const Duration(milliseconds: 1200),
                   child: SlideAnimation(
-                      verticalOffset: height(context) * 0.05,
-                      child: FadeInAnimation(
-                          child: CustomMovieItem(movie: movies[index]))),
+                    verticalOffset: height(context) * 0.05,
+                    child: FadeInAnimation(
+                      child: CustomMovieItem(
+                        movie: movies[index],
+                      ),
+                    ),
+                  ),
                 ),
             separatorBuilder: (context, index) =>
                 SizedBox(height: height(context) * 0.02),

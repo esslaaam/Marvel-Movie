@@ -32,6 +32,7 @@ class CustomMovieList extends StatelessWidget {
                 : cubit.homeMovies.isEmpty
                     ? const MoviesEmpty(text: "There are no movies")
                     : ListMovies(
+      key: const Key("list_movies_home"),
                         controller: cubit.scrollControllerMovies,
                         movies: cubit.homeMovies);
   }
