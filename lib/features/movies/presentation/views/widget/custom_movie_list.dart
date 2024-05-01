@@ -25,14 +25,14 @@ class CustomMovieList extends StatelessWidget {
                 })
             : state is MoviesPaginationFailure
                 ? CustomError(
-                    errMsg: (state as MoviesPaginationFailure) .errMsg,
+                    errMsg: (state as MoviesPaginationFailure).errMsg,
                     onPressed: () {
                       cubit.fetchMovies(pageNumber: cubit.nextPage - 1);
                     })
                 : cubit.homeMovies.isEmpty
                     ? const MoviesEmpty(text: "There are no movies")
                     : ListMovies(
-      key: const Key("list_movies_home"),
+                        key: const Key("list_movies_home"),
                         controller: cubit.scrollControllerMovies,
                         movies: cubit.homeMovies);
   }

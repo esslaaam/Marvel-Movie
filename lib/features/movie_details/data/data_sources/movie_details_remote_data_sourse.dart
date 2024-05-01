@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/local/app_config.dart';
 import 'package:movie_app/core/utils/api_services.dart';
 import 'package:movie_app/core/utils/constants.dart';
@@ -9,7 +10,7 @@ import 'package:movie_app/features/movie_details/domain/entities/movie_details_e
 abstract class MovieDetailsRemoteDataSource {
   Future<MovieDetailsEntity> fetchMovieDetails({required int id});
 }
-
+@Injectable(as: MovieDetailsRemoteDataSource)
 class MovieDetailsRemoteDataSourceImpl extends MovieDetailsRemoteDataSource {
   @override
   Future<MovieDetailsEntity> fetchMovieDetails({required int id}) async {

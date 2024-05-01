@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/errors/failure.dart';
 import 'package:movie_app/features/movie_details/data/data_sources/movie_details_local_data_source.dart';
 import 'package:movie_app/features/movie_details/data/data_sources/movie_details_remote_data_sourse.dart';
 import 'package:movie_app/features/movie_details/domain/entities/movie_details_entity.dart';
 import 'package:movie_app/features/movie_details/domain/repositories/movie_details_repo.dart';
 
+@Injectable(as: MovieDetailsRepo)
 class MovieDetailsReposImpl extends MovieDetailsRepo {
   final MovieDetailsLocalDataSource detailsLocalDataSource;
 
