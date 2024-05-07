@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:movie_app/features/animation/presentation/views/animation_screen.dart';
 import 'package:movie_app/features/movie_details/presentation/views/movie_details_view.dart';
 import 'package:movie_app/features/movies/presentation/views/movies_screen.dart';
 import 'package:movie_app/features/movies/presentation/views/widget/custom_movie_item.dart';
@@ -17,7 +18,7 @@ void main() {
         (tester) async {
           app.main();
           await tester.pumpAndSettle();
-          expect(find.byType(SplashView), findsOneWidget);
+          expect(find.byType(AnimationScreen), findsOneWidget);
           await tester.pumpAndSettle(const Duration(seconds: 2));
           expect(find.byType(MoviesScreen), findsOneWidget);
           expect(find.byKey(const Key('list_movies_home')), findsOneWidget);
