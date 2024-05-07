@@ -7,6 +7,7 @@ import 'package:movie_app/features/movie_details/domain/entities/movie_details_e
 import 'core/utils/bloc_observer.dart';
 import 'core/utils/constants.dart';
 import 'core/utils/functions/setup_locator.dart';
+import 'features/animation/presentation/views/animation_screen.dart';
 import 'features/splash/presentation/views/splash_view.dart';
 
 /// flutter packages pub run build_runner build ===> TO GENERATE TYPE ADAPTER
@@ -43,7 +44,7 @@ class MovieApp extends StatelessWidget {
         ),
         home: child,
       ),
-      child: const SplashView(),
+      child: const AnimationScreen(),
     );
   }
 }

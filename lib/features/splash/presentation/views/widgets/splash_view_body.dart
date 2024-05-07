@@ -26,7 +26,13 @@ class _SplashViewBodyState extends State<SplashViewBody>
     opacityAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(animationController);
+    ).animate(
+      /// Curved Animation
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
     animationController.forward();
 
@@ -34,6 +40,8 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
